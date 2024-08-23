@@ -5,6 +5,8 @@ import java.util.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -40,8 +42,11 @@ public class User {
     private boolean emmailVerified=false;
     private boolean phoneVerified=false;
 
+
+    
     //SELF,GOOGLE,FACEBOOK,TWITER,LINKEDIN,GITHUB
-    private Providers providers=Providers.SELF;
+    @Enumerated(value=EnumType.STRING)
+    private Providers provider=Providers.SELF;
     private String providersUserId;
 
     //add mode field needed
