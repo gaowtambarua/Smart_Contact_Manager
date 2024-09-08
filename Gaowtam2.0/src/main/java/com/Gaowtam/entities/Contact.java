@@ -9,8 +9,16 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Contact {
     @Id
     private String id;
@@ -26,7 +34,7 @@ public class Contact {
     private String linkedInLink;
 
     @ManyToOne
-    private User user;
+    private User user;///many contact thakbe ek user er jonno
 
     @OneToMany(mappedBy = "contact",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<SocialLink> links=new ArrayList<>();

@@ -12,8 +12,10 @@ public interface UserService {
     // Optional<User> updateUser(User user);
     // void deleteUser(String id);
     // boolean isUserExist(String userId);
-    // boolean isUserExitByEmail(String email);//UserName
+    //boolean isUserExitByEmail(String email);//UserName
     // List<User>getAlUsers();
 
     //add more methods here related user service[logic]
+
+    User getUserByEmail(String email);
 }
