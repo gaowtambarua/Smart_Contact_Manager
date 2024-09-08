@@ -1,16 +1,16 @@
 package com.Gaowtam.services.impl;
 
-// import java.util.List;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+ import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.Gaowtam.entities.User;
-// import com.Gaowtam.helpers.ResourceNotFoundException;
+import com.Gaowtam.helpers.AppConstats;
+import com.Gaowtam.helpers.ResourceNotFoundException;
 import com.Gaowtam.repositories.UserRepo;
 import com.Gaowtam.services.UserService;
 
@@ -22,8 +22,11 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    // private Logger logger=LoggerFactory.getLogger(this.getClass());
+
+    private Logger logger=LoggerFactory.getLogger(this.getClass());
 
 
     @Override
@@ -31,7 +34,26 @@ public class UserServiceImpl implements UserService{
         //user id:have to generate
         String userId=UUID.randomUUID().toString();
         user.setUserId(userId);
+
+        //password encode
+        // user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        //set the user role 
+        // user.setRoleList(List.of("Admin"));
+
+        user.setRoleList(List.of(AppConstats.ROLE_USER));
+        
+        logger.info(user.getProvider().toString());
+
         return userRepo.save(user);
+    }
+
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("User not found"));
     }
 
     // @Override

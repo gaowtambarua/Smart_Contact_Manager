@@ -11,5 +11,8 @@
   "description": "",
   "devDependencies": {
     "tailwindcss": "^3.4.9"
+  },
+  "dependencies": {
+    "gaowtam2.0": "file:"
   }
 }

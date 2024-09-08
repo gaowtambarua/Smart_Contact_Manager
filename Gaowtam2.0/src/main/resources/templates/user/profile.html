@@ -1,0 +1,47 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is user profile page</h1>
+    <h1 th:text="${loggedInUser.name}"></h1>
+    <h1 th:text="${loggedInUser.email}"></h1>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base:: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title data-th-text="${loggedInUser.name}+' | Gaowtam'">Profile Page</title>
+  </head>
+
+  <body>
+    <div id="content">
+      <!-- sidebar -->
+      <!-- use is logged in: sidebar -->
+
+      <div th:if="${loggedInUser}">
+        <div th:replace="~{user/sidebar :: sidebar}"></div>
+      </div>
+
+      <div class="sm:pl-64 pt-20 sm:pt-24" style="height: 1000px">
+        <div class="flex justify-center flex-col items-center">
+          <h1 class="text-5xl">Welcome to Profile page</h1>
+          <h2>Home offered by SCM</h2>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos,
+          ipsam.
+        </div>
+      </div>
+    </div>
+    <script>
+      console.log("this is profile page");
+      console.log("${loggedInUser}");
+    </script>
+  </body>
+</html>
