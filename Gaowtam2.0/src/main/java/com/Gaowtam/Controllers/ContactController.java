@@ -102,7 +102,7 @@ public class ContactController {
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setPicture(fileURL);
 
-        // contactService.save(contact);
+        contactService.save(contact);
 
         System.out.println(contactForm);
 
