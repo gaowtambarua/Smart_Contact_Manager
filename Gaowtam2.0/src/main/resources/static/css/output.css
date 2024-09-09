@@ -615,6 +615,10 @@ video {
   grid-column: span 3 / span 3;
 }
 
+.m-3 {
+  margin: 0.75rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -623,6 +627,10 @@ video {
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 
 .mb-2 {
@@ -681,10 +689,6 @@ video {
   margin-top: 2rem;
 }
 
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
 .block {
   display: block;
 }
@@ -739,6 +743,10 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.max-h-52 {
+  max-height: 13rem;
 }
 
 .w-1\/2 {
