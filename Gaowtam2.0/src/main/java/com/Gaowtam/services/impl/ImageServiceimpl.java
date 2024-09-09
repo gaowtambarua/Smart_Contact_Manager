@@ -23,9 +23,8 @@ public class ImageServiceimpl implements ImageService {
     }
 
     @Override
-    public String uploadImage(MultipartFile contactImage) {
+    public String uploadImage(MultipartFile contactImage,String filename) {
         // aikhne oi code lekha lagbe jekhane image upload hobe server er moddhe
-        String filename = UUID.randomUUID().toString();
 
         try {
             byte[] data = new byte[contactImage.getInputStream().available()];/*

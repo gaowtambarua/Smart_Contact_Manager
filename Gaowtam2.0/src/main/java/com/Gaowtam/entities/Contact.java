@@ -32,6 +32,9 @@ public class Contact {
     private boolean favortie=false;
     private String websiteLink;
     private String linkedInLink;
+    //private List<String>socialLinks=new ArrayList<>();
+
+    private String cloudinaryImagePublicId;
 
     @ManyToOne
     private User user;///many contact thakbe ek user er jonno
