@@ -1,5 +1,7 @@
 package com.Gaowtam.Controllers;
 
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,7 +29,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/user/contacts")
 public class ContactController {
 
-    private Logger logger=org.slf4j.LoggerFactory.getLogger(ContactController.class);
+    private Logger logger = org.slf4j.LoggerFactory.getLogger(ContactController.class);
 
     @Autowired
     private ContactService contactService;
@@ -39,57 +41,50 @@ public class ContactController {
     private UserService userService;
 
     @RequestMapping("/add")
-    //add contact page:handler
-    public String addContactView(Model model)
-    {
-        ContactForm contactForm=new ContactForm();
+    // add contact page:handler
+    public String addContactView(Model model) {
+        ContactForm contactForm = new ContactForm();
         // contactForm.setName("Nirob");
         // contactForm.setFavorite(true);
         model.addAttribute("contactForm", contactForm);
         return "user/add_contact";
     }
 
-    //jokhon form action er kaz korbe
-    @RequestMapping(value="/add",method = RequestMethod.POST)
-    public String saveContact(@Valid @ModelAttribute ContactForm contactForm,BindingResult result, Authentication authentication,HttpSession session)
-    {
-        //process the form data
+    // jokhon form action er kaz korbe
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result,
+            Authentication authentication, HttpSession session) {
+        // process the form data
 
+        // validate form
+        if (result.hasErrors()) {
 
-        //validate form
-        if(result.hasErrors())
-        {
-
-            result.getAllErrors().forEach(error->logger.info(error.toString()));
+            result.getAllErrors().forEach(error -> logger.info(error.toString()));
 
             // session.setAttribute("message","Please correct the following errors");
-            session.setAttribute("message",Message.builder()
-            .content("Please correct the following errors")
-            .type(MessageType.red)
-            .build());   
+            session.setAttribute("message", Message.builder()
+                    .content("Please correct the following errors")
+                    .type(MessageType.red)
+                    .build());
             return "user/add_contact";
         }
-        
-        String username=helper.getEmailOfLoggedinUser(authentication);
-        
 
-        //conver form -->contact
-        
-        User user=userService.getUserByEmail(username);
+        String username = helper.getEmailOfLoggedinUser(authentication);
 
-        Contact contact=new Contact();
+        // conver form -->contact
 
+        User user = userService.getUserByEmail(username);
 
-        //process the contact picture
+        Contact contact = new Contact();
 
-        logger.info("file information : {}",contactForm.getContactImage().getOriginalFilename());
+        // process the contact picture
 
+        logger.info("file information : {}", contactForm.getContactImage().getOriginalFilename());
 
-        ///image upload er code
+        /// image upload er code
+        String filename = UUID.randomUUID().toString();//databae er moddhe public id save kora lagbe ty aikhan thake uploadImage er moddhe pathano hocce
 
-        String fileURL=imageService.uploadImage(contactForm.getContactImage());
-
-
+        String fileURL = imageService.uploadImage(contactForm.getContactImage(),filename);
 
         contact.setName(contactForm.getName());
         contact.setFavortie(contactForm.isFavorite());
@@ -101,21 +96,20 @@ public class ContactController {
         contact.setLinkedInLink(contactForm.getLlinedInLink());
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setPicture(fileURL);
+        contact.setCloudinaryImagePublicId(filename);
 
         contactService.save(contact);
 
         System.out.println(contactForm);
 
+        // set the contact picture url
 
-        //set the contact picture url
-
-
-        //set messsage to  be displayed on  the view
+        // set messsage to be displayed on the view
         session.setAttribute("message",
-        Message.builder()
-            .content("You have succesfully added a new contact")
-            .type(MessageType.green)
-            .build());
+                Message.builder()
+                        .content("You have succesfully added a new contact")
+                        .type(MessageType.green)
+                        .build());
 
         return "redirect:/user/contacts/add";
     }
