@@ -2,6 +2,8 @@ package com.Gaowtam.forms;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Gaowtam.validatars.ValidFile;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -43,5 +45,7 @@ public class ContactForm {
     //annotaion create karege jo file validate
     //size
     //resoution
+
+    @ValidFile
     private MultipartFile contactImage;
 }
