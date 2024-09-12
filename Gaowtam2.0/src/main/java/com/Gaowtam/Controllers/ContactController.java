@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.Gaowtam.entities.Contact;
 import com.Gaowtam.entities.User;
 import com.Gaowtam.forms.ContactForm;
+import com.Gaowtam.helpers.AppConstats;
 import com.Gaowtam.helpers.Message;
 import com.Gaowtam.helpers.MessageType;
 import com.Gaowtam.helpers.helper;
@@ -118,7 +122,11 @@ public class ContactController {
 
     //view contatcts
     @RequestMapping
-    public String viewContacts(Model model,Authentication authentication)
+    public String viewContacts(
+        @RequestParam(value = "page",defaultValue = "0") int page,
+        @RequestParam(value = "size",defaultValue = "10") int size,
+        @RequestParam(value = "sortBy",defaultValue = "name") String sortBy,
+        @RequestParam(value = "direction",defaultValue = "asc") String direction,Model model,Authentication authentication)
     {
         //load all the user contacts
 
@@ -126,9 +134,12 @@ public class ContactController {
 
         User user=userService.getUserByEmail(username);
 
-        List<Contact> contacts = contactService.getByUser(user);
+        // List<Contact> contacts = contactService.getByUser(user);
 
-        model.addAttribute("contacts", contacts);
+        Page<Contact> pageContact = contactService.getByUser(user,page,size,sortBy,direction);
+
+        model.addAttribute("pageContact", pageContact);
+        model.addAttribute("pageSize",AppConstats.PAGE_SIZE);
         return "user/contacts";
     }
 }
