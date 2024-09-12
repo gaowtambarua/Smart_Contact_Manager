@@ -1,5 +1,6 @@
 package com.Gaowtam.Controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -112,5 +113,22 @@ public class ContactController {
                         .build());
 
         return "redirect:/user/contacts/add";
+    }
+
+
+    //view contatcts
+    @RequestMapping
+    public String viewContacts(Model model,Authentication authentication)
+    {
+        //load all the user contacts
+
+        String username=helper.getEmailOfLoggedinUser(authentication);
+
+        User user=userService.getUserByEmail(username);
+
+        List<Contact> contacts = contactService.getByUser(user);
+
+        model.addAttribute("contacts", contacts);
+        return "user/contacts";
     }
 }
