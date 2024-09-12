@@ -1,6 +1,7 @@
 package com.Gaowtam.services;
 
 import com.Gaowtam.entities.Contact;
+import com.Gaowtam.entities.User;
 
 import java.util.*;
 
@@ -26,4 +27,6 @@ public interface ContactService {
 
     //get contacts by userid
     List<Contact>getByUserId(String userId);
+
+    List<Contact>getByUser(User user);
 }
