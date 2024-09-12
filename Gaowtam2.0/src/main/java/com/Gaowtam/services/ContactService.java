@@ -5,6 +5,9 @@ import com.Gaowtam.entities.User;
 
 import java.util.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface ContactService {
     
     //save contacts
@@ -28,5 +31,6 @@ public interface ContactService {
     //get contacts by userid
     List<Contact>getByUserId(String userId);
 
-    List<Contact>getByUser(User user);
+    // List<Contact>getByUser(User user);
+    Page<Contact>getByUser(User user,int page,int size,String sortField,String sortDirection);
 }
