@@ -136,9 +136,10 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <!-- th:each="c : ${pageContact}" eti change kore deow hoyece niche th:each er moddhe -->
                   <tr
                     th:object="${c}"
-                    th:each="c : ${contacts}"
+                    th:each="c : ${pageContact.getContent()}"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >
                     <th
@@ -171,7 +172,7 @@
                     <td class="px-6 py-4">
                       <div class="flex items-center">
                         <div
-                        th:if="*{favortie}"
+                          th:if="*{favortie}"
                           class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"
                         ></div>
                         <a th:href="@{*{websiteLink}}" target="_blank"
@@ -184,23 +185,60 @@
                       </div>
                     </td>
                     <td class="px-6 py-4">
-                      
-                        <div>
-                            <a href="">
-                                <i class="fa-solid w-6 h-6 fa-trash"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa-solid w-6 h-6 fa-pen"></i>
-                            </a>
-                            <a href="">
-                                <i class="fa-solid w-6 h-6 fa-eye"></i>
-                            </a>
-                        </div>
-
+                      <div>
+                        <a href="">
+                          <i class="fa-solid w-6 h-6 fa-trash"></i>
+                        </a>
+                        <a href="">
+                          <i class="fa-solid w-6 h-6 fa-pen"></i>
+                        </a>
+                        <a href="">
+                          <i class="fa-solid w-6 h-6 fa-eye"></i>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
+
+              <!-- Pagination component -->
+
+              <div class="pagination_container p-5 text-center">
+                <nav aria-label="Page navigation example">
+                  <ul class="inline-flex -space-x-px text-base h-10">
+                    <li th:unless="${pageContact.first}">
+                      <a
+                        th:href="@{'/user/contacts?size='+${pageSize}+'&page='+${pageContact.number-1}}"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        >Previous</a
+                      >
+                    </li>
+
+                    <!-- 0 thake total data porjonto row colece,jar man index variable a rakha hoyece -->
+                    <li
+                      th:each="index : ${#numbers.sequence(0,pageContact.totalPages-1)}"
+                    >
+                      <!-- th:href="@{'/user/contacts?size=1&page='+${index}}" -->
+                      <a
+                        th:href="@{'/user/contacts?size='+${pageSize}+'&page='+${index}}"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      >
+                        <span th:text="${index+1}"></span>
+                      </a>
+                    </li>
+                    <li th:unless="${pageContact.last}">
+                      <a
+                        th:href="@{'/user/contacts?size='+${pageSize}+'&page='+${pageContact.number+1}}"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        >Next</a
+                      >
+                    </li>
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
         </div>
