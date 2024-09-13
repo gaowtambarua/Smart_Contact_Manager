@@ -87,9 +87,10 @@ public class ContactController {
         logger.info("file information : {}", contactForm.getContactImage().getOriginalFilename());
 
         /// image upload er code
-        String filename = UUID.randomUUID().toString();//databae er moddhe public id save kora lagbe ty aikhan thake uploadImage er moddhe pathano hocce
+        String filename = UUID.randomUUID().toString();// databae er moddhe public id save kora lagbe ty aikhan thake
+                                                       // uploadImage er moddhe pathano hocce
 
-        String fileURL = imageService.uploadImage(contactForm.getContactImage(),filename);
+        String fileURL = imageService.uploadImage(contactForm.getContactImage(), filename);
 
         contact.setName(contactForm.getName());
         contact.setFavortie(contactForm.isFavorite());
@@ -119,27 +120,63 @@ public class ContactController {
         return "redirect:/user/contacts/add";
     }
 
-
-    //view contatcts
+    // view contatcts
     @RequestMapping
     public String viewContacts(
-        @RequestParam(value = "page",defaultValue = "0") int page,
-        @RequestParam(value = "size",defaultValue = "10") int size,
-        @RequestParam(value = "sortBy",defaultValue = "name") String sortBy,
-        @RequestParam(value = "direction",defaultValue = "asc") String direction,Model model,Authentication authentication)
-    {
-        //load all the user contacts
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = AppConstats.PAGE_SIZE + "") int size,
+            // @RequestParam(value = "size",defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction, Model model,
+            Authentication authentication) {
+        // load all the user contacts
 
-        String username=helper.getEmailOfLoggedinUser(authentication);
+        String username = helper.getEmailOfLoggedinUser(authentication);
 
-        User user=userService.getUserByEmail(username);
+        User user = userService.getUserByEmail(username);
 
         // List<Contact> contacts = contactService.getByUser(user);
 
-        Page<Contact> pageContact = contactService.getByUser(user,page,size,sortBy,direction);
+        Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
 
         model.addAttribute("pageContact", pageContact);
-        model.addAttribute("pageSize",AppConstats.PAGE_SIZE);
+        model.addAttribute("pageSize", AppConstats.PAGE_SIZE);
         return "user/contacts";
+    }
+
+    // search handler
+
+    @RequestMapping("/search")
+    public String sarchHandler(
+            @RequestParam("field") String field,
+            @RequestParam("keyword") String value,
+            @RequestParam(value = "size",defaultValue=AppConstats.PAGE_SIZE+"") int size,
+            @RequestParam(value = "page",defaultValue = "0") int page,
+            @RequestParam(value = "sortBy",defaultValue = "name") String sortBy,
+            @RequestParam(value="derection",defaultValue = "asc") String direction,
+            Model model) {
+
+        logger.info("field {} keyword {}", field, value);
+        Page<Contact> pageContact=null;
+        if(field.equalsIgnoreCase("name"))
+        {
+            System.out.println(value+" ,"+sortBy);
+            pageContact = contactService.searchByName(value, size, page, sortBy, direction);
+        }
+
+        else if(field.equalsIgnoreCase("email"))
+        {
+            pageContact=contactService.searchByEamil(value, size, page, sortBy, direction);
+        }
+        else if(field.equalsIgnoreCase("phone"))
+        {
+            pageContact=contactService.searchByPhone(value, size, page, sortBy, direction);
+        }
+
+        logger.info("pageContact {}",pageContact);
+
+        model.addAttribute("pageContact", pageContact);
+
+        return "user/search";
     }
 }
