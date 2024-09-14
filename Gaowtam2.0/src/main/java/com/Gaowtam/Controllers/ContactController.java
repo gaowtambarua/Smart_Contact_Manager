@@ -19,6 +19,7 @@ import org.springframework.web.context.annotation.RequestScope;
 import com.Gaowtam.entities.Contact;
 import com.Gaowtam.entities.User;
 import com.Gaowtam.forms.ContactForm;
+import com.Gaowtam.forms.ContactSearchForm;
 import com.Gaowtam.helpers.AppConstats;
 import com.Gaowtam.helpers.Message;
 import com.Gaowtam.helpers.MessageType;
@@ -141,6 +142,8 @@ public class ContactController {
 
         model.addAttribute("pageContact", pageContact);
         model.addAttribute("pageSize", AppConstats.PAGE_SIZE);
+
+        model.addAttribute("contactSearchForm",new ContactSearchForm());
         return "user/contacts";
     }
 
@@ -148,8 +151,9 @@ public class ContactController {
 
     @RequestMapping("/search")
     public String sarchHandler(
-            @RequestParam("field") String field,
-            @RequestParam("keyword") String value,
+            // @RequestParam("field") String field,
+            // @RequestParam("keyword") String value,
+            @ModelAttribute ContactSearchForm contactSearchForm,//ContactSearchForm class er data search.html er moddhe pathano hoyece
             @RequestParam(value = "size", defaultValue = AppConstats.PAGE_SIZE + "") int size,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
@@ -157,27 +161,53 @@ public class ContactController {
             Model model,
             Authentication authentication) {
 
-        logger.info("field {} keyword {}", field, value);
+        // logger.info("field {} keyword {}", field, value);
+        logger.info("field {} keyword {}",contactSearchForm.getField(), contactSearchForm.getValue());
 
         var user = userService.getUserByEmail(helper.getEmailOfLoggedinUser(authentication));
 
         Page<Contact> pageContact = null;
-        if (field.equalsIgnoreCase("name")) {
-            System.out.println(value + " ," + sortBy);
-            pageContact = contactService.searchByName(value, size, page, sortBy, direction, user);
-        }
 
-        else if (field.equalsIgnoreCase("email")) {
-            pageContact = contactService.searchByEamil(value, size, page, sortBy, direction, user);
-        } else if (field.equalsIgnoreCase("phone")) {
-            pageContact = contactService.searchByPhone(value, size, page, sortBy, direction, user);
+
+
+        // if (field.equalsIgnoreCase("name")) {
+        //     System.out.println(value + " ," + sortBy);
+        //     pageContact = contactService.searchByName(value, size, page, sortBy, direction, user);
+        // }
+
+        // else if (field.equalsIgnoreCase("email")) {
+        //     pageContact = contactService.searchByEamil(value, size, page, sortBy, direction, user);
+        // } else if (field.equalsIgnoreCase("phone")) {
+        //     pageContact = contactService.searchByPhone(value, size, page, sortBy, direction, user);
+        // } else {
+        //     pageContact = contactService.searchByPhone("Select Field", size, page, sortBy, direction, user);
+        // }
+
+
+
+        if (contactSearchForm.getField().equalsIgnoreCase("name")) {
+            System.out.println(contactSearchForm.getValue() + " ," + sortBy);
+            pageContact = contactService.searchByName(contactSearchForm.getValue(), size, page, sortBy, direction, user);
+        }
+        else if (contactSearchForm.getField().equalsIgnoreCase("email")) {
+            pageContact = contactService.searchByEamil(contactSearchForm.getValue(), size, page, sortBy, direction, user);
+        } else if (contactSearchForm.getField().equalsIgnoreCase("phone")) {
+            pageContact = contactService.searchByPhone(contactSearchForm.getValue(), size, page, sortBy, direction, user);
         } else {
             pageContact = contactService.searchByPhone("Select Field", size, page, sortBy, direction, user);
         }
 
+
+
+
+
         logger.info("pageContact {}", pageContact);
 
+        model.addAttribute("contactSearchForm", contactSearchForm);
+
         model.addAttribute("pageContact", pageContact);
+
+        model.addAttribute("pageSize", AppConstats.PAGE_SIZE);
 
         return "user/search";
     }
