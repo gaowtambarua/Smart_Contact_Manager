@@ -9,32 +9,32 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ContactService {
-    
-    //save contacts
+
+    // save contacts
     Contact save(Contact contact);
 
-    //update contact
+    // update contact
     Contact update(Contact contact);
 
-    //get contacts
-    List<Contact>getAll();
+    // get contacts
+    List<Contact> getAll();
 
-    //get contact by id
+    // get contact by id
     Contact getById(String id);
 
-    //delete contact
+    // delete contact
     void delete(String id);
 
-    //search contact
-    Page<Contact> searchByName(String nameKeyword,int size,int page,String sortby,String order);
+    // search contact
+    Page<Contact> searchByName(String nameKeyword, int size, int page, String sortby, String order, User user);
 
-    Page<Contact> searchByEamil(String emailKeyword,int size,int page,String sortby,String order);
+    Page<Contact> searchByEamil(String emailKeyword, int size, int page, String sortby, String order, User user);
 
-    Page<Contact> searchByPhone(String phoneKeyword,int size,int page,String sortby,String order);
+    Page<Contact> searchByPhone(String phoneKeyword, int size, int page, String sortby, String order, User user);
 
-    //get contacts by userid
-    List<Contact>getByUserId(String userId);
+    // get contacts by userid
+    List<Contact> getByUserId(String userId);
 
     // List<Contact>getByUser(User user);
-    Page<Contact>getByUser(User user,int page,int size,String sortField,String sortDirection);
+    Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
 }
