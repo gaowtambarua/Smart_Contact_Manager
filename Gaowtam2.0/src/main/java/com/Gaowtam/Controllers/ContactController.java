@@ -150,30 +150,32 @@ public class ContactController {
     public String sarchHandler(
             @RequestParam("field") String field,
             @RequestParam("keyword") String value,
-            @RequestParam(value = "size",defaultValue=AppConstats.PAGE_SIZE+"") int size,
-            @RequestParam(value = "page",defaultValue = "0") int page,
-            @RequestParam(value = "sortBy",defaultValue = "name") String sortBy,
-            @RequestParam(value="derection",defaultValue = "asc") String direction,
-            Model model) {
+            @RequestParam(value = "size", defaultValue = AppConstats.PAGE_SIZE + "") int size,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "derection", defaultValue = "asc") String direction,
+            Model model,
+            Authentication authentication) {
 
         logger.info("field {} keyword {}", field, value);
-        Page<Contact> pageContact=null;
-        if(field.equalsIgnoreCase("name"))
-        {
-            System.out.println(value+" ,"+sortBy);
-            pageContact = contactService.searchByName(value, size, page, sortBy, direction);
+
+        var user = userService.getUserByEmail(helper.getEmailOfLoggedinUser(authentication));
+
+        Page<Contact> pageContact = null;
+        if (field.equalsIgnoreCase("name")) {
+            System.out.println(value + " ," + sortBy);
+            pageContact = contactService.searchByName(value, size, page, sortBy, direction, user);
         }
 
-        else if(field.equalsIgnoreCase("email"))
-        {
-            pageContact=contactService.searchByEamil(value, size, page, sortBy, direction);
-        }
-        else if(field.equalsIgnoreCase("phone"))
-        {
-            pageContact=contactService.searchByPhone(value, size, page, sortBy, direction);
+        else if (field.equalsIgnoreCase("email")) {
+            pageContact = contactService.searchByEamil(value, size, page, sortBy, direction, user);
+        } else if (field.equalsIgnoreCase("phone")) {
+            pageContact = contactService.searchByPhone(value, size, page, sortBy, direction, user);
+        } else {
+            pageContact = contactService.searchByPhone("Select Field", size, page, sortBy, direction, user);
         }
 
-        logger.info("pageContact {}",pageContact);
+        logger.info("pageContact {}", pageContact);
 
         model.addAttribute("pageContact", pageContact);
 
