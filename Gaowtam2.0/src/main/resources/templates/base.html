@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <!-- <html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="parent(content,title,script)"> -->
-<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="parent(content,title,script)">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html
+  class="light"
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="parent(content,title,script)"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:replace="${title}">Base Page</title>
-    <link rel="stylesheet" data-th-href="@{'/css/output.css'}">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" data-th-href="@{'/css/output.css'}">
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
     <!--Google Font-->
-    <link rel="stylesheet" th:href="@{'/css/style.css'}">
+    <link rel="stylesheet" th:href="@{'/css/style.css'}" />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
 
-<body class="dark:bg-gray-900 bg-gray-100 dark:text-white">
+  <body class="dark:bg-gray-900 bg-gray-100 dark:text-white">
     <!-- Common Header -->
 
     <!-- <ul th:fragment="navbar" class="p-4">
@@ -33,29 +44,25 @@
         </li>
      </ul> -->
 
-
-
     <!-- Manue Content -->
 
     <!-- is user is logged in: navbar -->
     <div th:if="${loggedInUser}">
-        <div data-th-replace="~{user/user_navbar::user_navbar}"></div>
-     </div>
+      <div data-th-replace="~{user/user_navbar::user_navbar}"></div>
+    </div>
 
-     <!-- user is not logged:navbar -->
-     <div th:unless="${loggedInUser}">
-        <div th:replace="~{navbar::navbar}"></div>
-     </div>
+    <!-- user is not logged:navbar -->
+    <div th:unless="${loggedInUser}">
+      <div th:replace="~{navbar::navbar}"></div>
+    </div>
 
     <!-- Main Content -->
     <div class="p-4">
-        <section th:replace="${content}"></section>
+      <section th:replace="${content}"></section>
     </div>
 
     <!-- Common Footer -->
-    <footer class="p-4">
-        Follter: Learn Code With NB Nirob
-    </footer>
+    <footer class="p-4">Follter: Learn Code With NB Nirob</footer>
 
     <!-- FLow Bite Content -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
@@ -64,6 +71,5 @@
     <script th:src="@{'/js/script.js'}"></script>
 
     <th:block th:replace="${script}"></th:block>
-</body>
-
+  </body>
 </html>

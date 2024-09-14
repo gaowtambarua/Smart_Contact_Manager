@@ -12,18 +12,15 @@
 </body>
 </html> -->
 
-
-
-
-
-
 <!DOCTYPE html>
 <html
   lang="en"
   th:replace="~{base:: parent(~{::#content},~{::title},~{::script})}"
 >
   <head>
-    <title data-th-text="${loggedInUser.name}+' | Dashboard'">Profile Page</title>
+    <title data-th-text="${loggedInUser.name}+' | Dashboard'">
+      Profile Page
+    </title>
   </head>
 
   <body>
@@ -37,7 +34,7 @@
 
       <div class="sm:pl-64 pt-20 sm:pt-24" style="height: 1000px">
         <div class="flex justify-center flex-col items-center">
-          <h1 class="text-5xl">Welcome to Dashboard  page</h1>
+          <h1 class="text-5xl">Welcome to Dashboard page</h1>
           <h2>Home offered by SCM</h2>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos,
           ipsam.
