@@ -12,23 +12,23 @@ import com.Gaowtam.entities.User;
 
 import java.util.List;
 
-
 @Repository
-public interface ContactRepo extends JpaRepository<Contact,String>{
-    
-    //find the contact by user
-    //custom finder method
-    // List<Contact> findByUser(User user);
-    Page<Contact> findByUser(User user,Pageable pageable);
+public interface ContactRepo extends JpaRepository<Contact, String> {
 
-    //custom query method get all contacts of a user
+    // find the contact by user
+    // custom finder method
+    // List<Contact> findByUser(User user);
+    Page<Contact> findByUser(User user, Pageable pageable);
+
+    // custom query method get all contacts of a user
     @Query("Select c From Contact c WHERE c.user.id= :userid")
     List<Contact> findByUserId(@Param("userid") String userid);
 
+    // custom finder method
+    // Containing use for like ''
+    Page<Contact> findByUserAndNameContaining(User user, String namekeyword, Pageable pageable);
 
-    //custom finder method
-    //Containing use for like ''
-    Page<Contact> findByNameContaining(String namekeyword,Pageable pageable);
-    Page<Contact> findByEmailContaining(String emailkeyword,Pageable pageable);
-    Page<Contact> findByPhoneNumberContaining(String phonekeyword,Pageable pageable);
+    Page<Contact> findByUserAndEmailContaining(User user, String emailkeyword, Pageable pageable);
+
+    Page<Contact> findByUserAndPhoneNumberContaining(User user, String phonekeyword, Pageable pageable);
 }
