@@ -1,0 +1,45 @@
+/* Custom styles to ensure SweetAlert2 buttons are visible
+.swal2-confirm {
+  background-color: #28a745;  Green color 
+  border-color: #28a745;  Green color 
+  color: white;  Text color 
+}
+
+ Style the Cancel button 
+.swal2-cancel {
+  background-color: #dc3545;  Red color 
+  border-color: #dc3545;  Red color 
+  color: white;  Text color 
+}
+ Optional: Change the hover and active states 
+.swal2-confirm:hover {
+  background-color: #218838;  Darker green 
+  border-color: #1e7e34;  Darker green 
+}
+
+.swal2-cancel:hover {
+  background-color: #c82333;  Darker red 
+  border-color: #bd2130;  Darker red 
+} */
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+.swal2-confirm {
+  background-color: #3085d6 !important;
+  color: #fff !important;
+}
+.swal2-confirm:hover {
+  background-color: #287bff !important;
+}
+
+/* Style the Cancel button */
+.swal2-cancel {
+  background-color: #aaa;
+  color: #fff;
+}
+
+.swal2-cancel:hover {
+  background-color: #888;
+}
+
+/* ------------------------------------------------------------------------------------------------------------- */

@@ -1,4 +1,5 @@
 console.log("Contact.js");
+const basURL = "localhost:8082";
 const viewContactModal = document.getElementById("view_contact_modal");
 
 // options with default values
@@ -69,7 +70,7 @@ async function loadContactdata(id) {
 
   try {
     const data = await (
-      await fetch(`http://localhost:8082/api/contacts/${id}`)
+      await fetch(`http://${basURL}/api/contacts/${id}`)
     ).json();
     console.log(data);
     console.log(data.name);
@@ -99,6 +100,17 @@ async function loadContactdata(id) {
 }
 ////////////////delete contact
 
-async function deleteContact() {
-  Swal.fire("SweetAlert2 is working!");
+async function deleteContact(id) {
+  Swal.fire({
+    title: "Do you want to delete the contact?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Delete",
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      const url = `http://${basURL}/user/contacts/delete/` + id;
+      window.location.replace(url); /* redirect url */
+    }
+  });
 }

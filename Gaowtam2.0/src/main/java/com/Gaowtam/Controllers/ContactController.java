@@ -214,11 +214,17 @@ public class ContactController {
     }
 
     @RequestMapping("/delete/{contactid}")
-    public String deleteContact(@PathVariable("contactid") String contactid)
+    public String deleteContact(@PathVariable("contactid") String contactid,HttpSession session)
     {
         contactService.delete(contactid);
 
         logger.info("contactiId{} deleted ",contactid);
+
+        session.setAttribute("message",
+        Message.builder()
+        .content("Contact is deleted successfully !! ")
+        .type(MessageType.green)
+        .build());
 
         return "redirect:/user/contacts";
     }

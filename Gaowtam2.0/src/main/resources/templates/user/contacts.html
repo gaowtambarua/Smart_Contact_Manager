@@ -25,6 +25,7 @@
 
           <div class="contacts_conatiner p-5">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <div th:replace="~{message::messagebox}"></div>
               <!-- Select Box  form-->
               <form
                 th:object="${contactSearchForm}"
@@ -156,7 +157,7 @@
                         <!-- <a th:href="@{'/user/contacts/delete/'+*{id}}">
                           <i class="fa-solid w-6 h-6 fa-trash"></i>
                         </a> -->
-                        <button th:onclick="deleteContact()">
+                        <button th:onclick="deleteContact([[${c.id}]])">
                           <i class="fa-solid w-6 h-6 fa-trash"></i>
                         </button>
                         <a href="">
