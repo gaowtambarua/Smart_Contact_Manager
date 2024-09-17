@@ -153,15 +153,36 @@
                     </td>
                     <td class="px-6 py-4">
                       <div>
-                        <a href="">
+                        <!-- <a th:href="@{'/user/contacts/delete/'+*{id}}">
                           <i class="fa-solid w-6 h-6 fa-trash"></i>
-                        </a>
+                        </a> -->
+                        <button th:onclick="deleteContact()">
+                          <i class="fa-solid w-6 h-6 fa-trash"></i>
+                        </button>
                         <a href="">
                           <i class="fa-solid w-6 h-6 fa-pen"></i>
                         </a>
-                        <a href="">
+                        <!-- eye -->
+                        <!-- <a href="">
                           <i class="fa-solid w-6 h-6 fa-eye"></i>
-                        </a>
+                        </a> -->
+
+                        <!-- <button onclick="openContactModal()">
+                          <i class="fa-solid w-6 h-6 fa-eye"></i>
+                        </button> -->
+                        <!-- {c.id}" c er man upor thake nicce -->
+
+                        <!------------------------------- nice 2ti same------------------------------------------------  -->
+                        <!-- <button
+                          th:data-id="${c.id}"
+                          th:onclick="loadContactdata(this.getAttribute('data-id'))"
+                        >
+                          <i class="fa-solid w-6 h-6 fa-eye"></i>
+                        </button> -->
+
+                        <button th:onclick="loadContactdata([[${c.id}]])">
+                          <i class="fa-solid w-6 h-6 fa-eye"></i>
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -219,8 +240,12 @@
             </div>
           </div>
         </div>
+        <!-- Model -->
+        <!-- Ai Model ti amra javascript er maddhome open korbo -->
+        <div th:replace="~{user/contact_modals::contact}"></div>
       </div>
     </div>
+    <script th:src="@{/js/contact.js}"></script>
     <script>
       console.log("this is profile page");
       console.log("${loggedInUser}");
