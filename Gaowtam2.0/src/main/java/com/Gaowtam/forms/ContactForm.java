@@ -48,4 +48,6 @@ public class ContactForm {
 
     @ValidFile
     private MultipartFile contactImage;
+
+    private String picture;
 }
