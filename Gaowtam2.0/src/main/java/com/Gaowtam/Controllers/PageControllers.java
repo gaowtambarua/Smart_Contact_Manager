@@ -19,8 +19,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-
-
 @Controller
 public class PageControllers {
 
@@ -28,79 +26,74 @@ public class PageControllers {
     private UserService userService;
 
     @GetMapping("/")
-    public String index()
-    {
+    public String index() {
         return "redirect:/home";
     }
 
     @RequestMapping("/home")
-    public String home(Model model)
-    {
+    public String home(Model model) {
         model.addAttribute("name", "Welcome To The Home Page");
         model.addAttribute("youtubeChannel", "Jmuna TV");
-        model.addAttribute("githubRepo","https://github.com/Gaowtam");
+        model.addAttribute("githubRepo", "https://github.com/Gaowtam");
         return "home";
     }
 
-    //about
+    // about
 
     @RequestMapping("/about")
-    public String aboutPage(Model model)
-    {
-        model.addAttribute("islogin",false);
+    public String aboutPage(Model model) {
+        model.addAttribute("islogin", false);
         return "about";
     }
-    
-    //services
+
+    // services
     @RequestMapping("/services")
-    public String servicesPage()
-    {
+    public String servicesPage() {
         return "services";
     }
 
-      //contact
-      @GetMapping("/contact")
-      public String contactPage() {
-          return new String("contact");
-      }
+    // contact
+    @GetMapping("/contact")
+    public String contactPage() {
+        return new String("contact");
+    }
 
-      @GetMapping("/login")
-      public String loginPage() {
-          return new String("login");
-      }
-      @GetMapping("/signup")
-      public String signupPage(Model model) {
-        UserForm userForm=new UserForm();
+    @GetMapping("/login")
+    public String loginPage() {
+        return new String("login");
+    }
 
-        //default set data
+    @GetMapping("/signup")
+    public String signupPage(Model model) {
+        UserForm userForm = new UserForm();
+
+        // default set data
         // userForm.setName("Gaowtam");
         // userForm.setAbout("Thies is about :Write something about yourself");
 
         model.addAttribute("userForm", userForm);
-          return new String("signup");
-      }
+        return new String("signup");
+    }
 
-      //Procesing register
-      @RequestMapping(value = "/do-register",method = RequestMethod.POST)
-      public String processRegister(@Valid @ModelAttribute UserForm userForm,BindingResult rBindingResult, HttpSession session)
-      {
-        //fetch form data
-        //UserForm
+    // Procesing register
+    @RequestMapping(value = "/do-register", method = RequestMethod.POST)
+    public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult,
+            HttpSession session) {
+        // fetch form data
+        // UserForm
         System.out.println("This is processRegister");
-        
 
-        //validate form data
+        // validate form data
 
-        if(rBindingResult.hasErrors())
-        {
+        if (rBindingResult.hasErrors()) {
             return "signup";
         }
 
-        //save to database
+        // save to database
 
-        //userservice
+        // userservice
 
-        //UserForm-->User
+        // UserForm-->User
 
         // User user=User.builder()
         // .name(userForm.getName())
@@ -111,30 +104,27 @@ public class PageControllers {
         // .profilePic("https://www.facebook.com/photo/?fbid=3835683316679175&set=a.1385021651745366")
         // .build();
 
-
-        User user=new User();
+        User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
         user.setAbout(userForm.getAbout());
         user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setEnabled(false);
         user.setProfilePic("https://www.facebook.com/photo/?fbid=3835683316679175&set=a.1385021651745366");
 
-
-
-
-        User saveUser=userService.saveUser(user);
+        User saveUser = userService.saveUser(user);
         System.out.println("user saved  : ");
 
-        //message="Registration Succecssfull"
+        // message="Registration Succecssfull"
 
-        //add the message;
-        Message m=Message.builder().content("Registration Successfull").type(MessageType.green).build();
-        session.setAttribute("message",m); 
-        // session.setAttribute("message","Higg"); 
+        // add the message;
+        Message m = Message.builder().content("Registration Successfull").type(MessageType.green).build();
+        session.setAttribute("message", m);
+        // session.setAttribute("message","Higg");
 
-        //redirect to login page;
+        // redirect to login page;
         return "redirect:/signup";
-      }
-      
+    }
+
 }
