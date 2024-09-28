@@ -154,15 +154,24 @@
                     </td>
                     <td class="px-6 py-4">
                       <div>
+                        <!-- delete contact  -->
+
                         <!-- <a th:href="@{'/user/contacts/delete/'+*{id}}">
                           <i class="fa-solid w-6 h-6 fa-trash"></i>
                         </a> -->
                         <button th:onclick="deleteContact([[${c.id}]])">
                           <i class="fa-solid w-6 h-6 fa-trash"></i>
                         </button>
-                        <a href="">
+
+                        <!-- update contact -->
+
+                        <a th:href="@{'/user/contacts/view/'+*{id}}">
                           <i class="fa-solid w-6 h-6 fa-pen"></i>
                         </a>
+
+                        <!-- viewcontact -->
+
+                        <!-- ----------------------------------------- -->
                         <!-- eye -->
                         <!-- <a href="">
                           <i class="fa-solid w-6 h-6 fa-eye"></i>
