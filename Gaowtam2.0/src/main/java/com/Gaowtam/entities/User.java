@@ -46,10 +46,10 @@ public class User implements UserDetails {
     private String profilePic;
     private String phoneNumber;
 
-    @Getter(value = AccessLevel.NONE) // Labok er moddhe enable auto genrate hobe na
+    // Labok er moddhe enable auto genrate hobe na
     // information
     // private boolean enabled=true;
-    private boolean enabled = false;
+    private boolean enabled = true;
     private boolean emmailVerified = false;
     private boolean phoneVerified = false;
 
