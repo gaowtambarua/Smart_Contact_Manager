@@ -12,39 +12,36 @@ import com.Gaowtam.entities.User;
 import com.Gaowtam.helpers.helper;
 import com.Gaowtam.services.UserService;
 
-@ControllerAdvice /*Shomosto Request er moddhe automatic kaj korbe,user pabe*/
+@ControllerAdvice /* Shomosto Request er moddhe automatic kaj korbe,user pabe */
 public class RootController {
 
-    private Logger logger=LoggerFactory.getLogger(UserController.class);
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService userService;
 
-
-    @ModelAttribute/*Shomosto Request er moddhe automatic kaj korbe,user pabe */
-    public void addLoggedInUserInformation(Model model,Authentication authentication)
-    {
-        if(authentication==null)
-        {
+    @ModelAttribute /* Shomosto Request er moddhe automatic kaj korbe,user pabe */
+    public void addLoggedInUserInformation(Model model, Authentication authentication) {
+        if (authentication == null) {
             return;
         }
         System.out.println("Adding logged in user information to the model");
-        String username=helper.getEmailOfLoggedinUser(authentication);
+        String username = helper.getEmailOfLoggedinUser(authentication);
 
-        logger.info("User logged in: {}",username);
+        logger.info("User logged in: {}", username);
 
         System.out.println("User profile");
 
-        //database thake data ke ana lagtece
+        // database thake data ke ana lagtece
 
-        User user=userService.getUserByEmail(username);
-        
+        User user = userService.getUserByEmail(username);
+
         // if (user == null) {
-        //     model.addAttribute("loggedInUser", null);
+        // model.addAttribute("loggedInUser", null);
         // } else {
-        //     System.out.println(user.getName());
-        //     System.out.println(user.getEmail());
+        // System.out.println(user.getName());
+        // System.out.println(user.getEmail());
 
-        //     model.addAttribute("loggedInUser", user);
+        // model.addAttribute("loggedInUser", user);
         // }
 
         System.out.println(user);
@@ -57,4 +54,3 @@ public class RootController {
         // logger.info("User logged in: {}",name);
     }
 }
-

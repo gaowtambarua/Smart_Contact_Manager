@@ -111,8 +111,9 @@ public class PageControllers {
         user.setAbout(userForm.getAbout());
         user.setPhoneNumber(userForm.getPhoneNumber());
         user.setEnabled(false);
-        user.setProfilePic("https://www.facebook.com/photo/?fbid=3835683316679175&set=a.1385021651745366");
-
+        // user.setProfilePic("https://www.facebook.com/photo/?fbid=3835683316679175&set=a.1385021651745366");
+        user.setProfilePic(
+                "https://lh3.googleusercontent.com/a/ACg8ocJNDfY0DNfl646Eayblk2g5-_1t3EuO0SgXXfs4dhCTx4TYyFjV=s258-c-no");
         User saveUser = userService.saveUser(user);
         System.out.println("user saved  : ");
 

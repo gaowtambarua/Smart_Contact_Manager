@@ -46,7 +46,7 @@ public class User implements UserDetails {
     private String profilePic;
     private String phoneNumber;
 
-    // Labok er moddhe enable auto genrate hobe na
+    @Getter(value = AccessLevel.NONE) // Labok er moddhe enable auto genrate hobe na
     // information
     // private boolean enabled=true;
     private boolean enabled = true;
@@ -65,6 +65,8 @@ public class User implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roleList = new ArrayList<>();
+
+    private String emailToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,7 +89,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.enabled;
+        return this.enabled;/* user enabled naki enable na aikhan thake control korbe */
     }
 
     @Override
